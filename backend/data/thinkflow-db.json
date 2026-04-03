@@ -1,0 +1,174 @@
+{
+  "users": [
+    {
+      "id": "tRRu4aWpNZYARSrAGOKJF",
+      "displayName": "ThinkFlow User",
+      "createdAt": "2026-04-03T17:42:10.925Z",
+      "personalityMode": "friendly-buddy",
+      "timezone": "UTC"
+    }
+  ],
+  "sleepLogs": [],
+  "moodEntries": [
+    {
+      "id": "oCf55451W_LfTF6nCbNYG",
+      "userId": "tRRu4aWpNZYARSrAGOKJF",
+      "timestamp": "2026-04-03T17:42:11.178Z",
+      "mood": "energetic",
+      "energy": 10,
+      "source": "ai",
+      "confidence": 1
+    },
+    {
+      "id": "Xe5GHTsQDtd3SCKoOB85S",
+      "userId": "tRRu4aWpNZYARSrAGOKJF",
+      "timestamp": "2026-04-03T17:42:11.191Z",
+      "mood": "calm",
+      "energy": 7,
+      "notes": "focused coding block",
+      "source": "manual",
+      "confidence": 0.95
+    },
+    {
+      "id": "ooZb9a7KyeiGo31NAlNt7",
+      "userId": "tRRu4aWpNZYARSrAGOKJF",
+      "timestamp": "2026-04-03T17:42:11.191Z",
+      "mood": "calm",
+      "energy": 7,
+      "notes": "focused coding block",
+      "source": "fused",
+      "confidence": 0.77
+    }
+  ],
+  "typingSnapshots": [
+    {
+      "id": "KPexCOPDLnFBnVcUmAIXk",
+      "userId": "tRRu4aWpNZYARSrAGOKJF",
+      "charsTyped": 900,
+      "wordsTyped": 160,
+      "backspaces": 28,
+      "errorCount": 7,
+      "pauseMs": 35000,
+      "durationMs": 180000,
+      "timestamp": "2026-04-03T17:42:11.178Z",
+      "typingSpeedWpm": 53.3,
+      "emotionSignal": "confidence",
+      "vibeScore": 100
+    }
+  ],
+  "codingSessions": [],
+  "habitLogs": [
+    {
+      "id": "tRRu4aWpNZYARSrAGOKJF-2026-04-03",
+      "userId": "tRRu4aWpNZYARSrAGOKJF",
+      "date": "2026-04-03",
+      "lateNightCoding": true,
+      "irregularBreaks": false,
+      "breaksTaken": 0
+    }
+  ],
+  "manualCircadianLogs": [
+    {
+      "id": "ZkzK0SnCJSA9dZu_2t1uF",
+      "mood": "calm",
+      "energy": 6,
+      "sleepHours": 7,
+      "sleepScore": 75,
+      "focusScore": 6,
+      "stressScore": 4,
+      "notes": "",
+      "userId": "tRRu4aWpNZYARSrAGOKJF",
+      "timestamp": "2026-04-03T18:16:40.833Z"
+    },
+    {
+      "id": "4FyA90ccAYymcN23xahrg",
+      "mood": "calm",
+      "energy": 3,
+      "sleepHours": 4,
+      "sleepScore": 68,
+      "focusScore": 3,
+      "stressScore": 8,
+      "notes": "",
+      "userId": "tRRu4aWpNZYARSrAGOKJF",
+      "timestamp": "2026-04-03T18:17:10.365Z"
+    },
+    {
+      "id": "x9QjbxSQyZPM2bxTS5INl",
+      "mood": "neutral",
+      "energy": 4,
+      "sleepHours": 5,
+      "sleepScore": 72,
+      "focusScore": 3,
+      "stressScore": 8,
+      "notes": "",
+      "userId": "tRRu4aWpNZYARSrAGOKJF",
+      "timestamp": "2026-04-03T18:27:36.142Z"
+    },
+    {
+      "id": "PzoozUsr4vGuYSo6Z4I-U",
+      "mood": "neutral",
+      "energy": 4,
+      "sleepHours": 5,
+      "sleepScore": 72,
+      "focusScore": 3,
+      "stressScore": 8,
+      "notes": "",
+      "userId": "tRRu4aWpNZYARSrAGOKJF",
+      "timestamp": "2026-04-03T18:27:52.246Z"
+    },
+    {
+      "id": "3CNDLqsBX90CkX1I09-03",
+      "mood": "neutral",
+      "energy": 4,
+      "sleepHours": 5,
+      "sleepScore": 72,
+      "focusScore": 3,
+      "stressScore": 8,
+      "notes": "",
+      "userId": "tRRu4aWpNZYARSrAGOKJF",
+      "timestamp": "2026-04-03T18:44:48.712Z"
+    },
+    {
+      "id": "oedNDXsxphXrRT3dqZtQ3",
+      "mood": "energetic",
+      "energy": 10,
+      "sleepHours": 9,
+      "sleepScore": 84,
+      "focusScore": 9,
+      "stressScore": 2,
+      "notes": "",
+      "userId": "tRRu4aWpNZYARSrAGOKJF",
+      "timestamp": "2026-04-03T18:53:45.447Z"
+    },
+    {
+      "id": "qo5ChKqucZv6HSf4QKgLd",
+      "mood": "fatigued",
+      "energy": 6,
+      "sleepHours": 3,
+      "sleepScore": 50,
+      "focusScore": 4,
+      "stressScore": 9,
+      "notes": "",
+      "userId": "tRRu4aWpNZYARSrAGOKJF",
+      "timestamp": "2026-04-03T18:55:28.116Z"
+    }
+  ],
+  "emotionBridge": {
+    "typingMood": "Neutral",
+    "faceMood": "Neutral",
+    "updatedAt": "2026-04-03T00:00:00.000Z"
+  },
+  "extensionLinks": [],
+  "breakRecommendations": [
+    {
+      "id": "QE6clIcV6nErqCZEDy6FD",
+      "userId": "tRRu4aWpNZYARSrAGOKJF",
+      "createdAt": "2026-04-03T17:42:11.210Z",
+      "type": "micro-stretch",
+      "reason": "Routine recovery break to sustain focus.",
+      "recommendedMinutes": 3
+    }
+  ],
+  "quizAttempts": [],
+  "rewardEvents": []
+}

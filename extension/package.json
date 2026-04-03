@@ -1,0 +1,70 @@
+{
+  "name": "thinkflow-vscode-link",
+  "displayName": "ThinkFlow Link",
+  "description": "Links VS Code typing telemetry with ThinkFlow circadian and emotion backend.",
+  "version": "0.1.0",
+  "publisher": "thinkflow",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "thinkflow.linkAccount",
+        "title": "ThinkFlow: Link Account"
+      },
+      {
+        "command": "thinkflow.startSession",
+        "title": "ThinkFlow: Start Session"
+      },
+      {
+        "command": "thinkflow.endSession",
+        "title": "ThinkFlow: End Session"
+      },
+      {
+        "command": "thinkflow.setPersonality",
+        "title": "ThinkFlow: Set Personality Mode"
+      },
+      {
+        "command": "thinkflow.openEmotionMonitor",
+        "title": "ThinkFlow: Open Emotion Monitor"
+      }
+    ],
+    "configuration": {
+      "title": "ThinkFlow",
+      "properties": {
+        "thinkflow.backendUrl": {
+          "type": "string",
+          "default": "http://localhost:8080",
+          "description": "ThinkFlow backend base URL"
+        },
+        "thinkflow.userId": {
+          "type": "string",
+          "default": "",
+          "description": "Linked ThinkFlow user id"
+        },
+        "thinkflow.installId": {
+          "type": "string",
+          "default": "",
+          "description": "VS Code install id used for extension linking"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "build": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.0",
+    "@types/vscode": "^1.90.0",
+    "typescript": "^5.8.3"
+  }
+}
