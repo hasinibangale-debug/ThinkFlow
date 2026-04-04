@@ -151,6 +151,66 @@
       "notes": "",
       "userId": "tRRu4aWpNZYARSrAGOKJF",
       "timestamp": "2026-04-03T18:55:28.116Z"
+    },
+    {
+      "id": "2ikqFrWF5RC6Srk_DjhwQ",
+      "mood": "calm",
+      "energy": 6,
+      "sleepHours": 7,
+      "sleepScore": 75,
+      "focusScore": 6,
+      "stressScore": 4,
+      "notes": "",
+      "userId": "tRRu4aWpNZYARSrAGOKJF",
+      "timestamp": "2026-04-04T07:04:38.951Z"
+    },
+    {
+      "id": "IUsu4Jn_EvbR1eSWgmBtM",
+      "mood": "calm",
+      "energy": 6,
+      "sleepHours": 7,
+      "sleepScore": 75,
+      "focusScore": 6,
+      "stressScore": 4,
+      "notes": "",
+      "userId": "tRRu4aWpNZYARSrAGOKJF",
+      "timestamp": "2026-04-04T07:06:50.950Z"
+    },
+    {
+      "id": "3gCmU-Uum5kFkKtCGo6iZ",
+      "mood": "calm",
+      "energy": 6,
+      "sleepHours": 7,
+      "sleepScore": 75,
+      "focusScore": 6,
+      "stressScore": 4,
+      "notes": "",
+      "userId": "tRRu4aWpNZYARSrAGOKJF",
+      "timestamp": "2026-04-04T07:06:52.402Z"
+    },
+    {
+      "id": "D-DvERO7ZSgm8CI0uvXPX",
+      "mood": "calm",
+      "energy": 6,
+      "sleepHours": 7,
+      "sleepScore": 75,
+      "focusScore": 6,
+      "stressScore": 4,
+      "notes": "",
+      "userId": "tRRu4aWpNZYARSrAGOKJF",
+      "timestamp": "2026-04-04T07:07:08.898Z"
+    },
+    {
+      "id": "R391FoQyCRhbdALUPgJBp",
+      "mood": "calm",
+      "energy": 6,
+      "sleepHours": 7,
+      "sleepScore": 75,
+      "focusScore": 6,
+      "stressScore": 4,
+      "notes": "",
+      "userId": "tRRu4aWpNZYARSrAGOKJF",
+      "timestamp": "2026-04-04T07:37:52.477Z"
     }
   ],
   "emotionBridge": {
