@@ -1,6 +1,5 @@
 import express from "express";
 import cors from "cors";
-import { config } from "./config.js";
 import { apiRouter } from "./routes/api.js";
 
 const app = express();
@@ -18,12 +17,16 @@ app.get("/", (_req, res) => {
 
 app.use("/api/v1", apiRouter);
 
-app.use((err: unknown, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
-  const message = err instanceof Error ? err.message : "Unknown server error";
-  res.status(500).json({ error: message });
-});
+app.use(
+  (err: unknown, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
+    const message = err instanceof Error ? err.message : "Unknown server error";
+    res.status(500).json({ error: message });
+  }
+);
 
-app.listen(config.port, () => {
-  // eslint-disable-next-line no-console
-  console.log(`ThinkFlow backend listening on http://localhost:${config.port}`);
+// Render-compatible port handling
+const port = process.env.PORT ? parseInt(process.env.PORT) : 8080;
+
+app.listen(port, () => {
+  console.log(`ThinkFlow backend running on port ${port}`);
 });
