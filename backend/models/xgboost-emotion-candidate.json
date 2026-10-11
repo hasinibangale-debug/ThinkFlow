@@ -1,0 +1,956 @@
+{
+  "modelType": "xgboost-multiclass",
+  "version": "1.2.0-candidate",
+  "classes": [
+    "frustration",
+    "confidence",
+    "neutral"
+  ],
+  "featureNames": [
+    "typingSpeedWpm",
+    "backspaceRatio",
+    "errorRate",
+    "pauseRatio",
+    "charsTyped",
+    "wordsTyped",
+    "backspaces",
+    "errorCount",
+    "pauseMs",
+    "durationMs"
+  ],
+  "baseScores": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "trees": [
+    {
+      "treeId": 0,
+      "classIndex": 0,
+      "nodes": [
+        {
+          "id": 0,
+          "featureIndex": 0,
+          "featureName": "typingSpeedWpm",
+          "splitValue": 44.2000008,
+          "leftId": 1,
+          "rightId": 2
+        },
+        {
+          "id": 1,
+          "leafValue": -0.0371428579
+        },
+        {
+          "id": 2,
+          "leafValue": 0.00894308928
+        }
+      ]
+    },
+    {
+      "treeId": 1,
+      "classIndex": 0,
+      "nodes": [
+        {
+          "id": 0,
+          "featureIndex": 0,
+          "featureName": "typingSpeedWpm",
+          "splitValue": 44.2000008,
+          "leftId": 1,
+          "rightId": 2
+        },
+        {
+          "id": 1,
+          "leafValue": -0.0372496955
+        },
+        {
+          "id": 2,
+          "leafValue": 0.0142956721
+        }
+      ]
+    },
+    {
+      "treeId": 2,
+      "classIndex": 0,
+      "nodes": [
+        {
+          "id": 0,
+          "featureIndex": 0,
+          "featureName": "typingSpeedWpm",
+          "splitValue": 72.6999969,
+          "leftId": 1,
+          "rightId": 2
+        },
+        {
+          "id": 1,
+          "leafValue": -0.000848180614
+        },
+        {
+          "id": 2,
+          "leafValue": 0.0447190069
+        }
+      ]
+    },
+    {
+      "treeId": 3,
+      "classIndex": 0,
+      "nodes": [
+        {
+          "id": 0,
+          "featureIndex": 0,
+          "featureName": "typingSpeedWpm",
+          "splitValue": 43.7000008,
+          "leftId": 1,
+          "rightId": 2
+        },
+        {
+          "id": 1,
+          "leafValue": -0.0396821499
+        },
+        {
+          "id": 2,
+          "leafValue": 0.00902809575
+        }
+      ]
+    },
+    {
+      "treeId": 4,
+      "classIndex": 0,
+      "nodes": [
+        {
+          "id": 0,
+          "featureIndex": 0,
+          "featureName": "typingSpeedWpm",
+          "splitValue": 44.2000008,
+          "leftId": 1,
+          "rightId": 2
+        },
+        {
+          "id": 1,
+          "leafValue": -0.0410738178
+        },
+        {
+          "id": 2,
+          "leafValue": 0.0014040278
+        }
+      ]
+    },
+    {
+      "treeId": 5,
+      "classIndex": 0,
+      "nodes": [
+        {
+          "id": 0,
+          "featureIndex": 0,
+          "featureName": "typingSpeedWpm",
+          "splitValue": 44.2000008,
+          "leftId": 1,
+          "rightId": 2
+        },
+        {
+          "id": 1,
+          "leafValue": -0.0248012692
+        },
+        {
+          "id": 2,
+          "leafValue": 0.013000234
+        }
+      ]
+    },
+    {
+      "treeId": 6,
+      "classIndex": 0,
+      "nodes": [
+        {
+          "id": 0,
+          "featureIndex": 1,
+          "featureName": "backspaceRatio",
+          "splitValue": 0.0653000027,
+          "leftId": 1,
+          "rightId": 2
+        },
+        {
+          "id": 1,
+          "leafValue": -0.0193075426
+        },
+        {
+          "id": 2,
+          "leafValue": 0.00757283717
+        }
+      ]
+    },
+    {
+      "treeId": 7,
+      "classIndex": 0,
+      "nodes": [
+        {
+          "id": 0,
+          "featureIndex": 0,
+          "featureName": "typingSpeedWpm",
+          "splitValue": 44.2000008,
+          "leftId": 1,
+          "rightId": 2
+        },
+        {
+          "id": 1,
+          "leafValue": -0.0391375944
+        },
+        {
+          "id": 2,
+          "leafValue": 0.00594480848
+        }
+      ]
+    },
+    {
+      "treeId": 8,
+      "classIndex": 0,
+      "nodes": [
+        {
+          "id": 0,
+          "featureIndex": 1,
+          "featureName": "backspaceRatio",
+          "splitValue": 0.0665000007,
+          "leftId": 1,
+          "rightId": 2
+        },
+        {
+          "id": 1,
+          "leafValue": -0.023904454
+        },
+        {
+          "id": 2,
+          "leafValue": 0.0123833166
+        }
+      ]
+    },
+    {
+      "treeId": 9,
+      "classIndex": 0,
+      "nodes": [
+        {
+          "id": 0,
+          "featureIndex": 0,
+          "featureName": "typingSpeedWpm",
+          "splitValue": 44.2000008,
+          "leftId": 1,
+          "rightId": 2
+        },
+        {
+          "id": 1,
+          "leafValue": -0.0395266153
+        },
+        {
+          "id": 2,
+          "leafValue": 0.00472601829
+        }
+      ]
+    },
+    {
+      "treeId": 10,
+      "classIndex": 0,
+      "nodes": [
+        {
+          "id": 0,
+          "featureIndex": 1,
+          "featureName": "backspaceRatio",
+          "splitValue": 0.0665000007,
+          "leftId": 1,
+          "rightId": 2
+        },
+        {
+          "id": 1,
+          "leafValue": -0.0147339944
+        },
+        {
+          "id": 2,
+          "leafValue": 0.0123233506
+        }
+      ]
+    },
+    {
+      "treeId": 11,
+      "classIndex": 0,
+      "nodes": [
+        {
+          "id": 0,
+          "featureIndex": 1,
+          "featureName": "backspaceRatio",
+          "splitValue": 0.0293000005,
+          "leftId": 1,
+          "rightId": 2
+        },
+        {
+          "id": 1,
+          "leafValue": -0.0436967276
+        },
+        {
+          "id": 2,
+          "leafValue": 0.00435603876
+        }
+      ]
+    },
+    {
+      "treeId": 12,
+      "classIndex": 0,
+      "nodes": [
+        {
+          "id": 0,
+          "featureIndex": 0,
+          "featureName": "typingSpeedWpm",
+          "splitValue": 72.6999969,
+          "leftId": 1,
+          "rightId": 2
+        },
+        {
+          "id": 1,
+          "leafValue": -0.0099209873
+        },
+        {
+          "id": 2,
+          "leafValue": 0.0427501574
+        }
+      ]
+    },
+    {
+      "treeId": 13,
+      "classIndex": 0,
+      "nodes": [
+        {
+          "id": 0,
+          "featureIndex": 1,
+          "featureName": "backspaceRatio",
+          "splitValue": 0.0653000027,
+          "leftId": 1,
+          "rightId": 2
+        },
+        {
+          "id": 1,
+          "leafValue": -0.0190660208
+        },
+        {
+          "id": 2,
+          "leafValue": 0.0134836426
+        }
+      ]
+    },
+    {
+      "treeId": 14,
+      "classIndex": 0,
+      "nodes": [
+        {
+          "id": 0,
+          "featureIndex": 3,
+          "featureName": "pauseRatio",
+          "splitValue": 0.700200021,
+          "leftId": 1,
+          "rightId": 2
+        },
+        {
+          "id": 1,
+          "leafValue": 0.00290846359
+        },
+        {
+          "id": 2,
+          "leafValue": -0.0492384173
+        }
+      ]
+    },
+    {
+      "treeId": 15,
+      "classIndex": 0,
+      "nodes": [
+        {
+          "id": 0,
+          "featureIndex": 1,
+          "featureName": "backspaceRatio",
+          "splitValue": 0.0291000009,
+          "leftId": 1,
+          "rightId": 2
+        },
+        {
+          "id": 1,
+          "leafValue": -0.0278328899
+        },
+        {
+          "id": 2,
+          "leafValue": 0.0067489082
+        }
+      ]
+    },
+    {
+      "treeId": 16,
+      "classIndex": 0,
+      "nodes": [
+        {
+          "id": 0,
+          "featureIndex": 0,
+          "featureName": "typingSpeedWpm",
+          "splitValue": 44.2000008,
+          "leftId": 1,
+          "rightId": 2
+        },
+        {
+          "id": 1,
+          "leafValue": -0.0228824914
+        },
+        {
+          "id": 2,
+          "leafValue": 0.012977791
+        }
+      ]
+    },
+    {
+      "treeId": 17,
+      "classIndex": 0,
+      "nodes": [
+        {
+          "id": 0,
+          "featureIndex": 1,
+          "featureName": "backspaceRatio",
+          "splitValue": 0.0689999983,
+          "leftId": 1,
+          "rightId": 2
+        },
+        {
+          "id": 1,
+          "leafValue": -0.0160660148
+        },
+        {
+          "id": 2,
+          "leafValue": 0.0131672593
+        }
+      ]
+    },
+    {
+      "treeId": 18,
+      "classIndex": 0,
+      "nodes": [
+        {
+          "id": 0,
+          "featureIndex": 0,
+          "featureName": "typingSpeedWpm",
+          "splitValue": 44.2000008,
+          "leftId": 1,
+          "rightId": 2
+        },
+        {
+          "id": 1,
+          "leafValue": -0.0342284553
+        },
+        {
+          "id": 2,
+          "leafValue": 0.0106676212
+        }
+      ]
+    },
+    {
+      "treeId": 19,
+      "classIndex": 0,
+      "nodes": [
+        {
+          "id": 0,
+          "featureIndex": 2,
+          "featureName": "errorRate",
+          "splitValue": 0.722899973,
+          "leftId": 1,
+          "rightId": 2
+        },
+        {
+          "id": 1,
+          "leafValue": 0.0114438627
+        },
+        {
+          "id": 2,
+          "leafValue": -0.0142604141
+        }
+      ]
+    },
+    {
+      "treeId": 20,
+      "classIndex": 1,
+      "nodes": [
+        {
+          "id": 0,
+          "featureIndex": 0,
+          "featureName": "typingSpeedWpm",
+          "splitValue": 44.2000008,
+          "leftId": 1,
+          "rightId": 2
+        },
+        {
+          "id": 1,
+          "leafValue": 0.0371428579
+        },
+        {
+          "id": 2,
+          "leafValue": -0.00894308928
+        }
+      ]
+    },
+    {
+      "treeId": 21,
+      "classIndex": 1,
+      "nodes": [
+        {
+          "id": 0,
+          "featureIndex": 0,
+          "featureName": "typingSpeedWpm",
+          "splitValue": 44.2000008,
+          "leftId": 1,
+          "rightId": 2
+        },
+        {
+          "id": 1,
+          "leafValue": 0.0372496955
+        },
+        {
+          "id": 2,
+          "leafValue": -0.0142956721
+        }
+      ]
+    },
+    {
+      "treeId": 22,
+      "classIndex": 1,
+      "nodes": [
+        {
+          "id": 0,
+          "featureIndex": 0,
+          "featureName": "typingSpeedWpm",
+          "splitValue": 72.6999969,
+          "leftId": 1,
+          "rightId": 2
+        },
+        {
+          "id": 1,
+          "leafValue": 0.000848180614
+        },
+        {
+          "id": 2,
+          "leafValue": -0.0447190069
+        }
+      ]
+    },
+    {
+      "treeId": 23,
+      "classIndex": 1,
+      "nodes": [
+        {
+          "id": 0,
+          "featureIndex": 0,
+          "featureName": "typingSpeedWpm",
+          "splitValue": 43.7000008,
+          "leftId": 1,
+          "rightId": 2
+        },
+        {
+          "id": 1,
+          "leafValue": 0.0396821499
+        },
+        {
+          "id": 2,
+          "leafValue": -0.00902809575
+        }
+      ]
+    },
+    {
+      "treeId": 24,
+      "classIndex": 1,
+      "nodes": [
+        {
+          "id": 0,
+          "featureIndex": 0,
+          "featureName": "typingSpeedWpm",
+          "splitValue": 44.2000008,
+          "leftId": 1,
+          "rightId": 2
+        },
+        {
+          "id": 1,
+          "leafValue": 0.0410738178
+        },
+        {
+          "id": 2,
+          "leafValue": -0.0014040278
+        }
+      ]
+    },
+    {
+      "treeId": 25,
+      "classIndex": 1,
+      "nodes": [
+        {
+          "id": 0,
+          "featureIndex": 0,
+          "featureName": "typingSpeedWpm",
+          "splitValue": 44.2000008,
+          "leftId": 1,
+          "rightId": 2
+        },
+        {
+          "id": 1,
+          "leafValue": 0.0248012692
+        },
+        {
+          "id": 2,
+          "leafValue": -0.013000234
+        }
+      ]
+    },
+    {
+      "treeId": 26,
+      "classIndex": 1,
+      "nodes": [
+        {
+          "id": 0,
+          "featureIndex": 1,
+          "featureName": "backspaceRatio",
+          "splitValue": 0.0653000027,
+          "leftId": 1,
+          "rightId": 2
+        },
+        {
+          "id": 1,
+          "leafValue": 0.0193075426
+        },
+        {
+          "id": 2,
+          "leafValue": -0.00757283717
+        }
+      ]
+    },
+    {
+      "treeId": 27,
+      "classIndex": 1,
+      "nodes": [
+        {
+          "id": 0,
+          "featureIndex": 0,
+          "featureName": "typingSpeedWpm",
+          "splitValue": 44.2000008,
+          "leftId": 1,
+          "rightId": 2
+        },
+        {
+          "id": 1,
+          "leafValue": 0.0391375944
+        },
+        {
+          "id": 2,
+          "leafValue": -0.00594480848
+        }
+      ]
+    },
+    {
+      "treeId": 28,
+      "classIndex": 1,
+      "nodes": [
+        {
+          "id": 0,
+          "featureIndex": 1,
+          "featureName": "backspaceRatio",
+          "splitValue": 0.0665000007,
+          "leftId": 1,
+          "rightId": 2
+        },
+        {
+          "id": 1,
+          "leafValue": 0.023904454
+        },
+        {
+          "id": 2,
+          "leafValue": -0.0123833166
+        }
+      ]
+    },
+    {
+      "treeId": 29,
+      "classIndex": 1,
+      "nodes": [
+        {
+          "id": 0,
+          "featureIndex": 0,
+          "featureName": "typingSpeedWpm",
+          "splitValue": 44.2000008,
+          "leftId": 1,
+          "rightId": 2
+        },
+        {
+          "id": 1,
+          "leafValue": 0.0395266153
+        },
+        {
+          "id": 2,
+          "leafValue": -0.00472601829
+        }
+      ]
+    },
+    {
+      "treeId": 30,
+      "classIndex": 1,
+      "nodes": [
+        {
+          "id": 0,
+          "featureIndex": 1,
+          "featureName": "backspaceRatio",
+          "splitValue": 0.0665000007,
+          "leftId": 1,
+          "rightId": 2
+        },
+        {
+          "id": 1,
+          "leafValue": 0.0147339944
+        },
+        {
+          "id": 2,
+          "leafValue": -0.0123233506
+        }
+      ]
+    },
+    {
+      "treeId": 31,
+      "classIndex": 1,
+      "nodes": [
+        {
+          "id": 0,
+          "featureIndex": 1,
+          "featureName": "backspaceRatio",
+          "splitValue": 0.0293000005,
+          "leftId": 1,
+          "rightId": 2
+        },
+        {
+          "id": 1,
+          "leafValue": 0.0436967276
+        },
+        {
+          "id": 2,
+          "leafValue": -0.00435603876
+        }
+      ]
+    },
+    {
+      "treeId": 32,
+      "classIndex": 1,
+      "nodes": [
+        {
+          "id": 0,
+          "featureIndex": 0,
+          "featureName": "typingSpeedWpm",
+          "splitValue": 72.6999969,
+          "leftId": 1,
+          "rightId": 2
+        },
+        {
+          "id": 1,
+          "leafValue": 0.0099209873
+        },
+        {
+          "id": 2,
+          "leafValue": -0.0427501574
+        }
+      ]
+    },
+    {
+      "treeId": 33,
+      "classIndex": 1,
+      "nodes": [
+        {
+          "id": 0,
+          "featureIndex": 1,
+          "featureName": "backspaceRatio",
+          "splitValue": 0.0653000027,
+          "leftId": 1,
+          "rightId": 2
+        },
+        {
+          "id": 1,
+          "leafValue": 0.0190660208
+        },
+        {
+          "id": 2,
+          "leafValue": -0.0134836426
+        }
+      ]
+    },
+    {
+      "treeId": 34,
+      "classIndex": 1,
+      "nodes": [
+        {
+          "id": 0,
+          "featureIndex": 3,
+          "featureName": "pauseRatio",
+          "splitValue": 0.700200021,
+          "leftId": 1,
+          "rightId": 2
+        },
+        {
+          "id": 1,
+          "leafValue": -0.00290846359
+        },
+        {
+          "id": 2,
+          "leafValue": 0.0492384173
+        }
+      ]
+    },
+    {
+      "treeId": 35,
+      "classIndex": 1,
+      "nodes": [
+        {
+          "id": 0,
+          "featureIndex": 1,
+          "featureName": "backspaceRatio",
+          "splitValue": 0.0291000009,
+          "leftId": 1,
+          "rightId": 2
+        },
+        {
+          "id": 1,
+          "leafValue": 0.0278328899
+        },
+        {
+          "id": 2,
+          "leafValue": -0.0067489082
+        }
+      ]
+    },
+    {
+      "treeId": 36,
+      "classIndex": 1,
+      "nodes": [
+        {
+          "id": 0,
+          "featureIndex": 0,
+          "featureName": "typingSpeedWpm",
+          "splitValue": 44.2000008,
+          "leftId": 1,
+          "rightId": 2
+        },
+        {
+          "id": 1,
+          "leafValue": 0.0228824914
+        },
+        {
+          "id": 2,
+          "leafValue": -0.012977791
+        }
+      ]
+    },
+    {
+      "treeId": 37,
+      "classIndex": 1,
+      "nodes": [
+        {
+          "id": 0,
+          "featureIndex": 1,
+          "featureName": "backspaceRatio",
+          "splitValue": 0.0689999983,
+          "leftId": 1,
+          "rightId": 2
+        },
+        {
+          "id": 1,
+          "leafValue": 0.0160660148
+        },
+        {
+          "id": 2,
+          "leafValue": -0.0131672593
+        }
+      ]
+    },
+    {
+      "treeId": 38,
+      "classIndex": 1,
+      "nodes": [
+        {
+          "id": 0,
+          "featureIndex": 0,
+          "featureName": "typingSpeedWpm",
+          "splitValue": 44.2000008,
+          "leftId": 1,
+          "rightId": 2
+        },
+        {
+          "id": 1,
+          "leafValue": 0.0342284553
+        },
+        {
+          "id": 2,
+          "leafValue": -0.0106676212
+        }
+      ]
+    },
+    {
+      "treeId": 39,
+      "classIndex": 1,
+      "nodes": [
+        {
+          "id": 0,
+          "featureIndex": 2,
+          "featureName": "errorRate",
+          "splitValue": 0.722899973,
+          "leftId": 1,
+          "rightId": 2
+        },
+        {
+          "id": 1,
+          "leafValue": -0.0114438627
+        },
+        {
+          "id": 2,
+          "leafValue": 0.0142604141
+        }
+      ]
+    },
+    {
+      "treeId": 40,
+      "classIndex": 2,
+      "nodes": [
+        {
+          "id": 0,
+          "leafValue": 0.0
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "description": "Frozen candidate XGBoost typing-based emotion polarity classifier (rate-only decision stumps)",
+    "sourceDataset": "Sensors 2021 (Kolakowska & Landowska)",
+    "targetPhenomenon": "Binary opinion-writing task polarity (positive opinion vs negative opinion proxy)",
+    "evaluationType": "binary_polarity_held_out_participants",
+    "heldOutAccuracy": 0.6,
+    "heldOutMacroF1": 0.5733,
+    "groupedCvAccuracy": 0.5848,
+    "groupedCvMacroF1": 0.5731,
+    "sampleCount": 196,
+    "participantCount": 49,
+    "classes": [
+      "frustration",
+      "confidence",
+      "neutral"
+    ],
+    "featureNames": [
+      "typingSpeedWpm",
+      "backspaceRatio",
+      "errorRate",
+      "pauseRatio",
+      "charsTyped",
+      "wordsTyped",
+      "backspaces",
+      "errorCount",
+      "pauseMs",
+      "durationMs"
+    ],
+    "activeFeatureNames": [
+      "typingSpeedWpm",
+      "backspaceRatio",
+      "errorRate",
+      "pauseRatio"
+    ],
+    "neutralSupport": 0,
+    "neutralStatus": "unvalidated_operational_prior",
+    "neutralNote": "The dataset contains zero ground-truth neutral typing samples. The neutral class in the runtime represents an operational indifference band and rule-based heuristic fallback, NOT an empirically validated ML-learned emotion category."
+  }
+}

@@ -13,13 +13,26 @@ interface TypingAccumulator {
   startedAt: number;
 }
 
+interface TypingWindowSnapshot {
+  charsTyped: number;
+  wordsTyped: number;
+  backspaces: number;
+  errorCount: number;
+  pauseMs: number;
+  durationMs: number;
+  timestamp: string;
+}
+
 let currentSessionId: string | undefined;
 let flushTimer: NodeJS.Timeout | undefined;
 let companionTimer: NodeJS.Timeout | undefined;
 let statusBar: vscode.StatusBarItem;
 let typing: TypingAccumulator;
+let lastFlushedWindow: TypingWindowSnapshot | undefined;
+let extensionContext: vscode.ExtensionContext | undefined;
 
 export function activate(context: vscode.ExtensionContext): void {
+  extensionContext = context;
   statusBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 20);
   statusBar.text = "$(pulse) ThinkFlow: idle";
   statusBar.tooltip = "ThinkFlow adaptive coding mode";
@@ -34,7 +47,10 @@ export function activate(context: vscode.ExtensionContext): void {
     vscode.commands.registerCommand("thinkflow.endSession", () => endSession()),
     vscode.commands.registerCommand("thinkflow.setPersonality", () => setPersonalityMode()),
     vscode.commands.registerCommand("thinkflow.openEmotionMonitor", () => openEmotionMonitor()),
+    vscode.commands.registerCommand("thinkflow.manageResearchConsent", () => manageResearchConsent()),
+    vscode.commands.registerCommand("thinkflow.submitResearchSelfReport", () => submitResearchSelfReport()),
     vscode.workspace.onDidChangeTextDocument((event) => handleTextChange(event)),
+    vscode.workspace.onDidChangeConfiguration((event) => void handleConfigChange(event)),
   );
 
   flushTimer = setInterval(() => {
@@ -81,7 +97,10 @@ async function linkAccount(context: vscode.ExtensionContext): Promise<void> {
     };
     const response = await postJson("/api/v1/extension/link", payload);
     if (response.ok) {
-      const body = response.data as { linkCode: string };
+      const body = response.data as { linkCode: string; token?: string };
+      if (body.token) {
+        await context.secrets.store("thinkflow.authToken", body.token);
+      }
       void vscode.window.showInformationMessage(`ThinkFlow linked. Link code: ${body.linkCode}`);
     } else {
       void vscode.window.showWarningMessage("ThinkFlow user stored locally, but backend link request failed.");
@@ -222,6 +241,16 @@ async function flushTypingTelemetry(): Promise<void> {
     return;
   }
 
+  const windowSnapshot: TypingWindowSnapshot = {
+    charsTyped: typing.charsTyped,
+    wordsTyped: typing.wordsTyped,
+    backspaces: typing.backspaces,
+    errorCount: typing.errorCount,
+    pauseMs: typing.pauseMs,
+    durationMs: Math.max(typing.durationMs, 1000),
+    timestamp: new Date().toISOString(),
+  };
+
   const payload = {
     userId,
     charsTyped: typing.charsTyped,
@@ -236,6 +265,8 @@ async function flushTypingTelemetry(): Promise<void> {
   if (!response.ok) {
     return;
   }
+
+  lastFlushedWindow = windowSnapshot;
 
   const body = response.data as { adaptiveMode: "gentle" | "balanced" | "challenge"; vibeScore: number };
   statusBar.text = `$(pulse) ThinkFlow: ${body.adaptiveMode} (${body.vibeScore})`;
@@ -357,8 +388,16 @@ async function getJson(path: string): Promise<{ ok: boolean; data: unknown }> {
   return requestJson("GET", path);
 }
 
+async function deleteJson(path: string, payload?: unknown): Promise<{ ok: boolean; data: unknown }> {
+  return requestJson("DELETE", path, payload);
+}
+
+/**
+ * Executes JSON HTTP requests to the ThinkFlow backend.
+ * Uses cryptographically verified Bearer tokens from VS Code SecretStorage.
+ */
 async function requestJson(
-  method: "GET" | "POST" | "PATCH",
+  method: "GET" | "POST" | "PATCH" | "DELETE",
   path: string,
   payload?: unknown,
 ): Promise<{ ok: boolean; data: unknown }> {
@@ -366,6 +405,23 @@ async function requestJson(
   const target = new URL(path, baseUrl);
   const body = payload ? JSON.stringify(payload) : undefined;
   const client = target.protocol === "https:" ? https : http;
+
+  const headers: Record<string, string | number> = {
+    "content-type": "application/json",
+    "content-length": body ? Buffer.byteLength(body) : 0,
+  };
+
+  const userId = getUserId();
+  if (userId) {
+    headers["x-user-id"] = userId;
+  }
+
+  if (extensionContext) {
+    const token = await extensionContext.secrets.get("thinkflow.authToken");
+    if (token) {
+      headers["authorization"] = `Bearer ${token}`;
+    }
+  }
 
   return new Promise((resolve) => {
     const req = client.request(
@@ -375,10 +431,7 @@ async function requestJson(
         port: target.port,
         path: `${target.pathname}${target.search}`,
         method,
-        headers: {
-          "content-type": "application/json",
-          "content-length": body ? Buffer.byteLength(body) : 0,
-        },
+        headers,
       },
       (res) => {
         const chunks: Buffer[] = [];
@@ -399,6 +452,279 @@ async function requestJson(
 
     req.end();
   });
+}
+
+function isResearchOptedIn(): boolean {
+  return (
+    vscode.workspace.getConfiguration("thinkflow").get<boolean>("researchTelemetryOptIn") ?? false
+  );
+}
+
+async function setResearchOptInSetting(value: boolean): Promise<void> {
+  await vscode.workspace
+    .getConfiguration("thinkflow")
+    .update("researchTelemetryOptIn", value, vscode.ConfigurationTarget.Global);
+}
+
+function getErrorMessage(data: unknown): string {
+  if (typeof data === "object" && data !== null) {
+    const record = data as Record<string, unknown>;
+    if (typeof record.error === "string") {
+      return record.error;
+    }
+    if (typeof record.reason === "string") {
+      return record.reason;
+    }
+  }
+  return "Unknown error";
+}
+
+async function manageResearchConsent(): Promise<void> {
+  const userId = getUserId();
+  if (!userId) {
+    void vscode.window.showWarningMessage("Set thinkflow.userId first via ThinkFlow: Link Account.");
+    return;
+  }
+
+  const token = extensionContext ? await extensionContext.secrets.get("thinkflow.authToken") : undefined;
+  if (!token) {
+    void vscode.window.showWarningMessage(
+      "Link your account first via 'ThinkFlow: Link Account' to authenticate research actions.",
+    );
+    return;
+  }
+
+  const currentOptIn = isResearchOptedIn();
+  const selected = await vscode.window.showQuickPick(
+    [
+      {
+        label: currentOptIn ? "$(check) Status: Opted In" : "$(circle-slash) Status: Opted Out",
+        description: currentOptIn ? "Research collection enabled" : "Research collection disabled (default)",
+        kind: vscode.QuickPickItemKind.Separator,
+      },
+      {
+        label: "$(pass) Opt In to Research Telemetry",
+        description: "Contribute pseudonymized aggregate numerical typing metrics & voluntary self-reports",
+        value: "opt-in",
+      },
+      {
+        label: "$(stop) Opt Out of Research Telemetry",
+        description: "Stop future research submissions (regular ThinkFlow features remain active)",
+        value: "opt-out",
+      },
+      {
+        label: "$(trash) Delete Collected Research Data",
+        description: "Request erasure of all previously contributed research samples",
+        value: "delete-data",
+      },
+    ],
+    {
+      placeHolder: `ThinkFlow Research Telemetry Consent (Currently ${currentOptIn ? "Opted In" : "Opted Out"})`,
+    },
+  );
+
+  if (!selected || !selected.value) {
+    return;
+  }
+
+  if (selected.value === "opt-in") {
+    const response = await patchJson(`/api/v1/users/${userId}/consent`, { optedIn: true });
+    if (response.ok) {
+      await setResearchOptInSetting(true);
+      void vscode.window.showInformationMessage(
+        "ThinkFlow: Explicit research consent enabled. You can now contribute voluntary mood self-reports.",
+      );
+    } else {
+      void vscode.window.showErrorMessage(
+        `Failed to enable research consent: ${getErrorMessage(response.data)}`,
+      );
+    }
+  } else if (selected.value === "opt-out") {
+    const response = await patchJson(`/api/v1/users/${userId}/consent`, { optedIn: false });
+    if (response.ok) {
+      await setResearchOptInSetting(false);
+      const action = await vscode.window.showInformationMessage(
+        "ThinkFlow: Research telemetry disabled. Future research submissions are stopped.",
+        "Delete My Research Data",
+        "Keep Past Data",
+      );
+      if (action === "Delete My Research Data") {
+        await deleteResearchData(userId);
+      }
+    } else {
+      void vscode.window.showErrorMessage(
+        `Failed to update consent: ${getErrorMessage(response.data)}`,
+      );
+    }
+  } else if (selected.value === "delete-data") {
+    const confirm = await vscode.window.showWarningMessage(
+      "Are you sure you want to permanently delete all your contributed research samples?",
+      { modal: true },
+      "Delete My Data",
+    );
+    if (confirm === "Delete My Data") {
+      await deleteResearchData(userId);
+    }
+  }
+}
+
+async function deleteResearchData(userId: string): Promise<void> {
+  const response = await deleteJson(`/api/v1/users/${userId}/research-data`);
+  if (response.ok) {
+    const body = response.data as { deletedCount?: number };
+    await setResearchOptInSetting(false);
+    void vscode.window.showInformationMessage(
+      `ThinkFlow: Successfully deleted ${body.deletedCount ?? 0} research sample(s). Consent flag reset.`,
+    );
+  } else {
+    void vscode.window.showErrorMessage(
+      `Failed to delete research data: ${getErrorMessage(response.data)}`,
+    );
+  }
+}
+
+async function handleConfigChange(event: vscode.ConfigurationChangeEvent): Promise<void> {
+  if (!event.affectsConfiguration("thinkflow.researchTelemetryOptIn")) {
+    return;
+  }
+  const userId = getUserId();
+  if (!userId) {
+    return;
+  }
+  const optIn = isResearchOptedIn();
+  await patchJson(`/api/v1/users/${userId}/consent`, { optedIn: optIn });
+}
+
+async function submitResearchSelfReport(): Promise<void> {
+  const userId = getUserId();
+  if (!userId) {
+    void vscode.window.showWarningMessage("Set thinkflow.userId first via ThinkFlow: Link Account.");
+    return;
+  }
+
+  const token = extensionContext ? await extensionContext.secrets.get("thinkflow.authToken") : undefined;
+  if (!token) {
+    void vscode.window.showWarningMessage(
+      "Link your account first via 'ThinkFlow: Link Account' to authenticate research actions.",
+    );
+    return;
+  }
+
+  if (!isResearchOptedIn()) {
+    const chosen = await vscode.window.showWarningMessage(
+      "ThinkFlow research telemetry is disabled by default. Explicit voluntary opt-in is required before submitting research data.",
+      "Manage Consent",
+      "Dismiss",
+    );
+    if (chosen === "Manage Consent") {
+      await manageResearchConsent();
+    }
+    return;
+  }
+
+  const now = Date.now();
+  let windowSnapshot: TypingWindowSnapshot | undefined;
+
+  // If active in-memory accumulator has meaningful typing (> 1s duration and activity):
+  if (typing.durationMs >= 1000 && (typing.charsTyped > 0 || typing.backspaces > 0)) {
+    windowSnapshot = {
+      charsTyped: typing.charsTyped,
+      wordsTyped: typing.wordsTyped,
+      backspaces: typing.backspaces,
+      errorCount: typing.errorCount,
+      pauseMs: typing.pauseMs,
+      durationMs: Math.max(typing.durationMs, 1000),
+      timestamp: new Date(now).toISOString(),
+    };
+    lastFlushedWindow = windowSnapshot;
+    typing = resetAccumulator();
+  } else if (lastFlushedWindow) {
+    const flushedTime = Date.parse(lastFlushedWindow.timestamp);
+    if (!Number.isNaN(flushedTime) && now - flushedTime <= 300000) {
+      windowSnapshot = lastFlushedWindow;
+    }
+  }
+
+  if (!windowSnapshot) {
+    void vscode.window.showWarningMessage(
+      "No typing activity found in the last 5 minutes (requires at least 1s of typing).",
+    );
+    return;
+  }
+
+  // Supported labels: frustrated, confident, neutral, calm, energetic, fatigued
+  const moodPick = await vscode.window.showQuickPick(
+    [
+      { label: "Frustrated", value: "frustrated", description: "Facing syntax friction, errors, or mental obstacles" },
+      { label: "Confident / In Flow", value: "confident", description: "Focused progress, clear mental model" },
+      { label: "Neutral", value: "neutral", description: "Standard routine coding, baseline concentration" },
+      { label: "Calm", value: "calm", description: "Relaxed, low stress, steady pace" },
+      { label: "Energetic", value: "energetic", description: "High arousal/speed (excluded from confidence mapping)" },
+      { label: "Fatigued", value: "fatigued", description: "Tired, sluggish, low cognitive energy" },
+    ],
+    { placeHolder: "Select your voluntary mood self-report for recent typing" },
+  );
+
+  if (!moodPick) {
+    return;
+  }
+
+  const energyPick = await vscode.window.showQuickPick(
+    [
+      { label: "Skip energy rating", value: undefined },
+      { label: "1 - Exhausted", value: 1 },
+      { label: "2 - Very low energy", value: 2 },
+      { label: "3 - Low energy", value: 3 },
+      { label: "4 - Mild fatigue", value: 4 },
+      { label: "5 - Moderate / steady", value: 5 },
+      { label: "6 - Good energy", value: 6 },
+      { label: "7 - Alert and active", value: 7 },
+      { label: "8 - High energy", value: 8 },
+      { label: "9 - Very energetic", value: 9 },
+      { label: "10 - Peak energy", value: 10 },
+    ],
+    { placeHolder: "Rate your energy level (1-10, optional)" },
+  );
+
+  const reportTimestamp = new Date().toISOString();
+
+  // Send ONLY aggregate numerical features - NEVER raw text, keystrokes, or file paths
+  const payload = {
+    userId,
+    sessionId: currentSessionId || `adhoc-${Date.now().toString(36)}`,
+    window: {
+      timestamp: windowSnapshot.timestamp,
+      charsTyped: windowSnapshot.charsTyped,
+      wordsTyped: windowSnapshot.wordsTyped,
+      backspaces: windowSnapshot.backspaces,
+      errorCount: windowSnapshot.errorCount,
+      pauseMs: windowSnapshot.pauseMs,
+      durationMs: windowSnapshot.durationMs,
+    },
+    selfReport: {
+      emotion: moodPick.value,
+      ...(energyPick?.value !== undefined ? { energy: energyPick.value } : {}),
+      reportTimestamp,
+    },
+  };
+
+  const response = await postJson("/api/v1/research/samples", payload);
+  if (response.ok) {
+    void vscode.window.showInformationMessage(
+      `ThinkFlow: Research mood self-report recorded (${moodPick.label}). Thank you for contributing!`,
+    );
+  } else {
+    const errorMsg = getErrorMessage(response.data);
+    if (errorMsg.includes("cannot be mapped defensibly")) {
+      void vscode.window.showInformationMessage(
+        `ThinkFlow: Mood recorded. Note: Label '${moodPick.value}' was received, but excluded from ML training per defensible mapping policy.`,
+      );
+    } else {
+      void vscode.window.showErrorMessage(
+        `ThinkFlow: Failed to record research sample: ${errorMsg}`,
+      );
+    }
+  }
 }
 
 function tryParseJson(text: string): unknown {

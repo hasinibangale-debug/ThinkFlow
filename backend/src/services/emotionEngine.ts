@@ -68,7 +68,7 @@ export function fuseMoodSignals(params: {
   }
 
   const blendedConfidence =
-    manualMood === aiMood
+    manualMood === aiMood || (manualMood === "confident" && aiMood === "energetic")
       ? 0.93
       : clamp(
           safeAvg([

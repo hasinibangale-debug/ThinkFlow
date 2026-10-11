@@ -2,9 +2,15 @@ export type IdeName = "vscode" | "intellij" | "pycharm" | "jetbrains";
 
 export type PersonalityMode = "strict-mentor" | "friendly-buddy" | "interviewer";
 
-export type MoodLabel = "calm" | "frustrated" | "energetic" | "fatigued" | "neutral";
+export type MoodLabel = "calm" | "frustrated" | "energetic" | "fatigued" | "neutral" | "confident";
 
 export type AdaptiveMode = "gentle" | "challenge" | "balanced";
+
+export interface ResearchConsent {
+  optedIn: boolean;
+  updatedAt: string;
+  version: string;
+}
 
 export interface UserProfile {
   id: string;
@@ -12,6 +18,7 @@ export interface UserProfile {
   createdAt: string;
   personalityMode: PersonalityMode;
   timezone: string;
+  researchConsent?: ResearchConsent;
 }
 
 export interface SleepLog {
@@ -77,6 +84,8 @@ export interface ExtensionLink {
   installId: string;
   linkedAt: string;
   linkCode: string;
+  tokenHash?: string;
+  revokedAt?: string;
 }
 
 export interface BreakRecommendation {
@@ -124,6 +133,46 @@ export interface EmotionBridgeState {
   updatedAt: string;
 }
 
+export type EmotionTargetClass = "frustration" | "confidence" | "neutral";
+
+export interface AggregateTypingFeatures {
+  charsTyped: number;
+  wordsTyped: number;
+  backspaces: number;
+  errorCount: number;
+  pauseMs: number;
+  durationMs: number;
+  typingSpeedWpm: number;
+  backspaceRatio: number;
+  errorRate: number;
+  pauseRatio: number;
+}
+
+/**
+ * Isolated research training sample pairing aggregate keystroke dynamics
+ * with voluntary ground-truth emotion self-reports.
+ *
+ * NOTE ON PRIVACY & PSEUDONYMIZATION:
+ * - participantId is a salted HMAC-SHA256 hash of userId. This is PSEUDONYMIZED
+ *   under GDPR Art. 4(5) (not anonymous), as possession of the secret salt allows
+ *   linking if required for research consent audits or right-to-erasure requests.
+ * - Under NO circumstances does this schema store raw typed strings, key identities,
+ *   file paths, project names, or freeform mood notes.
+ */
+export interface ResearchTrainingSample {
+  id: string;
+  participantId: string;
+  sessionId: string;
+  timestamp: string;
+  features: AggregateTypingFeatures;
+  label: {
+    selfReportedEmotion: MoodLabel;
+    energy?: number;
+    targetClass: EmotionTargetClass;
+    reportLatencySec: number;
+  };
+}
+
 export interface DbSchema {
   users: UserProfile[];
   sleepLogs: SleepLog[];
@@ -137,4 +186,5 @@ export interface DbSchema {
   breakRecommendations: BreakRecommendation[];
   quizAttempts: QuizAttempt[];
   rewardEvents: RewardEvent[];
+  researchSamples: ResearchTrainingSample[];
 }
